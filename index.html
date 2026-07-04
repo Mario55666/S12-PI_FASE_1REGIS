@@ -1,12 +1,1376 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Proyecto Ilustrador - Valor de la Amistad</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formulario Estado de Arte - Proyecto Ilustrador 2026</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --neon-pink: #ff2aa3;
+  --neon-cyan: #00f5ff;
+  --neon-purple: #7b2cff;
+  --dark-base: #0b0b0f;
+  --dark-purple: #1a0f2e;
+  --highlight-yellow: #ffe600;
+  --text-light: #e7e7ff;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Rajdhani', sans-serif;
+  background: var(--dark-base);
+  color: var(--text-light);
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+/* Grid background */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(123,44,255,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(123,44,255,0.06) 1px, transparent 1px);
+  background-size: 50px 50px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ===== LAYOUT ===== */
+.container { max-width: 900px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
+
+/* ===== HEADER ===== */
+.header {
+  border-bottom: 1px solid rgba(123,44,255,0.2);
+  background: rgba(11,11,15,0.85);
+  backdrop-filter: blur(10px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.header-left { display: flex; align-items: center; gap: 12px; }
+.header-logo { height: 36px; width: auto; }
+.header-org { font-size: 9px; color: rgba(231,231,255,0.3); font-family: 'Orbitron', sans-serif; line-height: 1.6; }
+.header-org span { color: var(--neon-cyan); }
+.header-buttons { display: flex; gap: 8px; }
+
+/* ===== BUTTONS ===== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+  letter-spacing: 0.5px;
+}
+.btn:hover { opacity: 0.85; }
+.btn-primary {
+  background: linear-gradient(90deg, var(--neon-pink), var(--neon-purple), var(--neon-cyan));
+  color: #fff;
+}
+.btn-outline {
+  background: transparent;
+  border: 1px solid rgba(0,245,255,0.3);
+  color: var(--neon-cyan);
+}
+.btn-outline:hover { background: rgba(0,245,255,0.1); }
+.btn-ghost {
+  background: transparent;
+  border: 1px dashed rgba(123,44,255,0.3);
+  color: rgba(231,231,255,0.4);
+  width: 100%;
+  justify-content: center;
+  margin-top: 12px;
+}
+.btn-ghost:hover { border-color: var(--neon-cyan); color: var(--neon-cyan); }
+.btn-danger {
+  background: transparent;
+  color: var(--neon-pink);
+  border: none;
+  padding: 4px;
+}
+
+/* ===== CARD ===== */
+.card {
+  background: rgba(26,15,46,0.8);
+  border: 1px solid rgba(123,44,255,0.25);
+  border-radius: 10px;
+  padding: 24px;
+  margin-bottom: 20px;
+  backdrop-filter: blur(4px);
+}
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.card-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+}
+.card-subtitle {
+  font-size: 10px;
+  color: rgba(231,231,255,0.35);
+  margin-left: auto;
+  font-family: 'Orbitron', sans-serif;
+}
+
+/* ===== TITLE SECTION ===== */
+.page-title {
+  text-align: center;
+  padding: 32px 0 16px;
+}
+.page-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1px solid rgba(0,245,255,0.15);
+  background: rgba(0,245,255,0.05);
+  color: var(--neon-cyan);
+  font-size: 9px;
+  font-family: 'Orbitron', sans-serif;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+.page-title h1 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 26px;
+  font-weight: 900;
+  background: linear-gradient(90deg, var(--neon-pink), var(--neon-cyan), var(--neon-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.page-title p {
+  font-size: 12px;
+  color: rgba(231,231,255,0.35);
+  max-width: 480px;
+  margin: 8px auto 0;
+}
+
+/* ===== GRID ===== */
+.grid-3 { display: grid; grid-template-columns: 1fr; gap: 12px; }
+@media(min-width:768px) { .grid-3 { grid-template-columns: 1fr 1fr 1fr; } }
+.grid-5 { display: grid; grid-template-columns: 1fr; gap: 12px; }
+@media(min-width:768px) { .grid-5 { grid-template-columns: 1fr 1fr 1fr 1fr 1fr; } }
+.grid-3-pieza { display: grid; grid-template-columns: 1fr; gap: 12px; }
+@media(min-width:768px) { .grid-3-pieza { grid-template-columns: 1fr 1fr 1fr; } }
+
+/* ===== FORM ELEMENTS ===== */
+.form-group { display: flex; flex-direction: column; gap: 4px; }
+.form-label {
+  font-size: 10px;
+  color: rgba(231,231,255,0.45);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.required { color: var(--neon-pink); }
+
+input[type="text"],
+input[type="email"],
+input[type="date"],
+input[type="number"],
+select,
+textarea {
+  background: var(--dark-base);
+  border: 1px solid rgba(123,44,255,0.25);
+  border-radius: 6px;
+  padding: 7px 10px;
+  color: var(--text-light);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.2s;
+  width: 100%;
+}
+input:focus, select:focus, textarea:focus {
+  border-color: var(--neon-cyan);
+}
+input::placeholder { color: rgba(231,231,255,0.2); }
+textarea { resize: vertical; min-height: 120px; }
+select { cursor: pointer; appearance: none; }
+select option { background: var(--dark-base); color: var(--text-light); }
+
+input[readonly] { color: rgba(231,231,255,0.3); }
+
+/* ===== TOOLTIP ===== */
+.tooltip-wrap {
+  position: relative;
+  display: inline-flex;
+  margin-left: 4px;
+}
+.tooltip-icon {
+  width: 14px; height: 14px;
+  color: var(--neon-purple);
+  cursor: help;
+  transition: color 0.2s;
+}
+.tooltip-icon:hover { color: var(--neon-cyan); }
+.tooltip-box {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 220px;
+  padding: 8px 10px;
+  background: var(--dark-purple);
+  border: 1px solid rgba(0,245,255,0.3);
+  border-radius: 8px;
+  font-size: 10px;
+  color: rgba(231,231,255,0.8);
+  line-height: 1.5;
+  z-index: 200;
+  display: none;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+}
+.tooltip-wrap:hover .tooltip-box { display: block; }
+.tooltip-box::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: rgba(0,245,255,0.3);
+}
+
+/* ===== STUDENT CARD ===== */
+.student-card {
+  background: rgba(11,11,15,0.5);
+  border: 1px solid rgba(123,44,255,0.15);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+.student-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.student-num {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 700; color: #fff;
+  flex-shrink: 0;
+}
+.student-role { font-size: 12px; font-weight: 600; }
+.student-desc { font-size: 9px; color: rgba(231,231,255,0.3); }
+
+/* ===== SIGNATURE PAD ===== */
+.sig-wrap { position: relative; }
+.sig-canvas {
+  width: 100%;
+  height: 90px;
+  background: transparent;
+  border: 1px solid rgba(123,44,255,0.25);
+  border-radius: 6px;
+  cursor: crosshair;
+  touch-action: none;
+}
+.sig-clear {
+  position: absolute;
+  top: 4px; right: 4px;
+  padding: 3px 6px;
+  background: rgba(255,42,163,0.15);
+  border: none;
+  border-radius: 4px;
+  color: var(--neon-pink);
+  font-size: 10px;
+  cursor: pointer;
+  display: none;
+}
+.sig-clear.show { display: block; }
+.sig-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+.sig-hint { font-size: 9px; color: rgba(231,231,255,0.25); }
+.sig-download {
+  font-size: 9px;
+  color: var(--neon-cyan);
+  background: rgba(0,245,255,0.08);
+  border: 1px solid rgba(0,245,255,0.2);
+  border-radius: 4px;
+  padding: 3px 8px;
+  cursor: pointer;
+  display: none;
+  font-family: 'Rajdhani', sans-serif;
+}
+.sig-download.show { display: inline-flex; align-items: center; gap: 4px; }
+
+/* ===== FILE UPLOAD ===== */
+.upload-zone {
+  width: 100%;
+  height: 140px;
+  border: 2px dashed rgba(123,44,255,0.25);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.upload-zone:hover {
+  border-color: rgba(0,245,255,0.4);
+  background: rgba(0,245,255,0.03);
+}
+.upload-zone.has-image { border-style: solid; border-color: rgba(0,245,255,0.2); }
+.upload-zone img { width: 100%; height: 100%; object-fit: contain; }
+.upload-hint { font-size: 11px; color: rgba(231,231,255,0.35); }
+.upload-limit { font-size: 9px; color: rgba(231,231,255,0.18); }
+.upload-input { display: none; }
+.upload-error {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  color: var(--neon-pink);
+  margin-top: 4px;
+}
+.upload-info {
+  font-size: 10px;
+  color: var(--neon-cyan);
+  margin-top: 4px;
+}
+.upload-remove {
+  font-size: 10px;
+  color: var(--neon-pink);
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-top: 4px;
+}
+
+/* ===== PIEZA CARD ===== */
+.pieza-card {
+  background: rgba(11,11,15,0.5);
+  border: 1px solid rgba(123,44,255,0.15);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+.pieza-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.pieza-title { font-family: 'Orbitron', sans-serif; font-size: 11px; color: var(--highlight-yellow); }
+
+/* ===== TABLE ===== */
+.criteria-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+.criteria-table th {
+  text-align: left;
+  padding: 8px;
+  color: rgba(231,231,255,0.35);
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 500;
+  font-size: 10px;
+  border-bottom: 1px solid rgba(123,44,255,0.2);
+}
+.criteria-table th:last-child,
+.criteria-table th:nth-last-child(2),
+.criteria-table th:nth-last-child(3) { text-align: center; }
+.criteria-table td {
+  padding: 8px;
+  border-bottom: 1px solid rgba(123,44,255,0.08);
+}
+.criteria-table tr:hover td { background: rgba(123,44,255,0.04); }
+.crit-name { color: var(--neon-pink); font-weight: 600; }
+.crit-desc { color: rgba(231,231,255,0.4); }
+.status-si { color: #4ade80; text-align: center; font-weight: 700; }
+.status-no { color: #f87171; text-align: center; font-weight: 700; }
+
+/* ===== CONTRACT ===== */
+.contract-box {
+  background: rgba(255,42,163,0.05);
+  border: 1px solid rgba(255,42,163,0.15);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  font-size: 11px;
+  line-height: 1.7;
+  color: rgba(231,231,255,0.65);
+}
+.contract-box p { margin-bottom: 10px; }
+.cl-pink { color: var(--neon-pink); font-weight: 700; }
+.cl-cyan { color: var(--neon-cyan); font-weight: 700; }
+.cl-purple { color: var(--neon-purple); font-weight: 700; }
+.cl-yellow { color: var(--highlight-yellow); font-weight: 700; }
+
+.checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 11px;
+  color: rgba(231,231,255,0.5);
+  cursor: pointer;
+}
+.checkbox-label input { margin-top: 2px; accent-color: var(--neon-pink); }
+
+/* ===== SECTION DIVIDER ===== */
+.section-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--neon-purple), var(--neon-pink), var(--neon-cyan), transparent);
+  margin: 16px 0;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  border-top: 1px solid rgba(123,44,255,0.15);
+  background: var(--dark-base);
+  padding: 32px 20px;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  text-align: center;
+}
+@media(min-width:768px) {
+  .footer-grid { grid-template-columns: 1fr 1fr 1fr; text-align: left; }
+}
+.footer-logo { height: 28px; margin-bottom: 6px; }
+.footer-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 12px;
+  color: rgba(231,231,255,0.35);
+  margin-bottom: 6px;
+}
+@media(min-width:768px) { .footer-line { justify-content: flex-start; } }
+.footer-line.teacher { color: var(--neon-cyan); font-weight: 600; }
+.footer-copy {
+  text-align: center;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(123,44,255,0.08);
+  font-size: 8px;
+  color: rgba(231,231,255,0.12);
+  font-family: 'Orbitron', sans-serif;
+}
+
+/* ===== SUBMIT SECTION ===== */
+.submit-section { text-align: center; padding-bottom: 40px; }
+.submit-hint {
+  font-size: 10px;
+  color: rgba(231,231,255,0.18);
+  margin-top: 8px;
+}
+.success-msg {
+  margin-top: 12px;
+  font-size: 12px;
+  color: #4ade80;
+  font-family: 'Orbitron', sans-serif;
+}
+
+/* ===== SVG ICONS ===== */
+.svg-icon { width: 16px; height: 16px; display: inline-block; vertical-align: middle; }
+.svg-icon-sm { width: 12px; height: 12px; }
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="header">
+  <div class="header-inner">
+    <div class="header-left">
+      <img src="logo-idc.png" alt="IDC" class="header-logo">
+      <div class="header-org">
+        INSTITUTO DE EDUCACION SUPERIOR PUBLICO<br>
+        <span>DISEÑO & COMUNICACION</span>
+      </div>
+    </div>
+    <div class="header-buttons">
+      <button class="btn btn-outline" onclick="showDemo()">
+        <svg class="svg-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        AYUDA
+      </button>
+      <button class="btn btn-primary" onclick="generatePDF()">
+        <svg class="svg-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        IMPRIMIR PDF
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- ===== TITLE ===== -->
+  <div class="page-title">
+    <div class="page-badge">
+      <svg class="svg-icon-sm" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+      CURSO PROYECTO ILUSTRADOR 2026
+    </div>
+    <h1>FORMULARIO DE ESTADO DE ARTE</h1>
+    <p>Primer informe del estado de arte de los Proyectos Finales de Curso. Complete todos los campos requeridos. Pasa el mouse sobre el icono <span style="color:var(--neon-purple)">&#9432;</span> para ver la ayuda de cada campo.</p>
+  </div>
+
+  <!-- ===== DATOS GENERALES ===== -->
+  <div class="card">
+    <div class="card-header">
+      <svg class="svg-icon" style="color:var(--neon-cyan)" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      <span class="card-title" style="color:var(--text-light)">DATOS GENERALES</span>
+    </div>
+    <div class="grid-3">
+      <div class="form-group">
+        <label class="form-label">Nombre del Equipo <span class="required">*</span>
+          <span class="tooltip-wrap">
+            <svg class="svg-icon svg-icon-sm tooltip-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <span class="tooltip-box">Ingresa el nombre oficial de tu equipo de trabajo. Este nombre aparecera en todos los documentos y piezas graficas. Ejemplo: Valor de la Amistad</span>
+          </span>
+        </label>
+        <input type="text" id="nombreEquipo" value="Valor de la Amistad" placeholder="Ej: Valor de la Amistad">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Fecha <span class="required">*</span>
+          <span class="tooltip-wrap">
+            <svg class="svg-icon svg-icon-sm tooltip-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <span class="tooltip-box">Selecciona la fecha en que presentas este informe de estado de arte. Debe ser la fecha de la sesion de aprendizaje.</span>
+          </span>
+        </label>
+        <input type="date" id="fecha" value="2026-06-26">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Semana</label>
+        <input type="text" value="12" readonly>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== MIEMBROS DEL EQUIPO ===== -->
+  <div class="card">
+    <div class="card-header">
+      <svg class="svg-icon" style="color:var(--neon-pink)" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      <span class="card-title" style="color:var(--text-light)">MIEMBROS DEL EQUIPO</span>
+      <span class="card-subtitle" style="color:var(--neon-pink)">TODOS LOS CAMPOS SON OBLIGATORIOS</span>
+    </div>
+    <div id="studentsContainer"></div>
+  </div>
+
+  <!-- ===== PIEZAS GRAFICAS ===== -->
+  <div class="card">
+    <div class="card-header">
+      <svg class="svg-icon" style="color:var(--highlight-yellow)" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry"2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+      <span class="card-title" style="color:var(--text-light)">PIEZAS GRAFICAS ELEGIDAS</span>
+    </div>
+    <p style="font-size:11px;color:rgba(231,231,255,0.35);margin-bottom:12px;">Sube las piezas graficas que presentaras para cada proyecto. Puedes agregar multiples piezas. <strong style="color:var(--neon-cyan)">Tamano maximo por archivo: 5 MB</strong></p>
+    <div id="piezasContainer"></div>
+    <button class="btn btn-ghost" onclick="addPieza()">
+      <svg class="svg-icon svg-icon-sm" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      AGREGAR PIEZA
+    </button>
+  </div>
+
+  <!-- ===== CRITERIOS ===== -->
+  <div class="card">
+    <div class="card-header">
+      <svg class="svg-icon" style="color:#4ade80" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+      <span class="card-title" style="color:var(--text-light)">CRITERIOS DE EVALUACION</span>
+    </div>
+    <div style="overflow-x:auto;">
+      <table class="criteria-table">
+        <thead>
+          <tr><th>Criterio</th><th>Descripcion</th><th style="text-align:center">Cuento</th><th style="text-align:center">Infografia</th><th style="text-align:center">Juego</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="crit-name">(A) Organizacion</td><td class="crit-desc">Estructura organizativa clara con inicio, desarrollo y conclusion</td><td class="status-si">SI</td><td class="status-no">NO</td><td class="status-si">SI</td></tr>
+          <tr><td class="crit-name">(B) Sketchbook digital</td><td class="crit-desc">Bocetos, storyboard, planimetria y armonias de color</td><td class="status-si">SI</td><td class="status-no">NO</td><td class="status-si">SI</td></tr>
+          <tr><td class="crit-name">(C) Caracterizacion</td><td class="crit-desc">Personajes identificables con perfil psicologico</td><td class="status-si">SI</td><td class="status-si">SI</td><td class="status-no">NO</td></tr>
+          <tr><td class="crit-name">(D) Creatividad</td><td class="crit-desc">Tecnicas de ilustracion, planos y propiedad intelectual</td><td class="status-si">SI</td><td class="status-no">NO</td><td class="status-si">SI</td></tr>
+          <tr><td class="crit-name">(E) Legibilidad</td><td class="crit-desc">Contraste adecuado, sin interferencias visuales</td><td class="status-si">SI</td><td class="status-si">SI</td><td class="status-si">SI</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ===== CONTRATO ===== -->
+  <div class="card" style="border-color:rgba(255,42,163,0.3);">
+    <div class="card-header">
+      <svg class="svg-icon" style="color:var(--neon-pink)" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      <span class="card-title" style="color:var(--neon-pink)">CONTRATO DE DERECHOS DE AUTOR</span>
+    </div>
+    <div class="contract-box">
+      <p><span class="cl-pink">CLAUSULA 1 - PROPIEDAD INTELECTUAL COMPARTIDA:</span> Los derechos de autor de todos los proyectos desarrollados en el curso de Proyecto Ilustrador 2026 pertenecen de manera <span class="cl-yellow">equitativa y conjunta</span> a todos los miembros del equipo.</p>
+      <p><span class="cl-cyan">CLAUSULA 2 - REGISTRO EN PIEZAS GRAFICAS:</span> Todas las piezas graficas presentadas <span class="cl-yellow">deben incluir el credito completo</span> de todos los miembros del equipo en todas las piezas graficas presentadas.</p>
+      <p><span class="cl-purple">CLAUSULA 3 - RENUNCIA AL EQUIPO:</span> Si un miembro renuncia al equipo, debe presentar una <span class="cl-yellow">carta poder</span> indicando que cede sus derechos de participacion <span class="cl-pink">creativa</span>, <span class="cl-cyan">intelectual</span> y <span class="cl-purple">funcional</span> a los demas miembros del equipo.</p>
+      <p><span class="cl-yellow">CLAUSULA 4 - DISTRIBUCION EQUITATIVA:</span> Los beneficios y reconocimientos seran distribuidos de manera equitativa entre todos los miembros activos.</p>
+    </div>
+    <label class="checkbox-label">
+      <input type="checkbox" id="contratoCheck">
+      <span>Acepto los terminos del contrato de derechos de autor. Entiendo que los derechos de todos los proyectos pertenecen equitativamente a todos los miembros del equipo y que cualquier renuncia requiere una carta poder cediendo los derechos creativos, intelectuales y funcionales.</span>
+    </label>
+  </div>
+
+  <!-- ===== SUBMIT ===== -->
+  <div class="submit-section">
+    <button class="btn btn-primary" style="padding:14px 32px;font-size:14px;" onclick="generatePDF()">
+      <svg class="svg-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+      IMPRIMIR PDF
+    </button>
+    <p class="submit-hint">Se generara un PDF oficial con marca de agua CONFIDENCIAL, firmas y atributos de seguridad</p>
+    <div id="successMsg" class="success-msg" style="display:none;">PDF generado exitosamente</div>
+  </div>
+
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="container">
+    <div class="section-divider"></div>
+    <div class="footer-grid">
+      <div>
+        <img src="logo-idc.png" alt="IDC" class="footer-logo" style="margin:0 auto 6px;">
+        <div style="font-size:10px;color:rgba(231,231,255,0.25);">Instituto de Educacion Superior Publico<br>Diseno & Comunicacion</div>
+      </div>
+      <div>
+        <div class="footer-line">
+          <svg class="svg-icon svg-icon-sm" style="color:var(--neon-purple)" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 3 3 6 3s6-1 6-3v-5"/></svg>
+          Curso: Proyecto Ilustrador 2026
+        </div>
+        <div class="footer-line">
+          <svg class="svg-icon svg-icon-sm" style="color:var(--neon-purple)" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Semana 12
+        </div>
+        <div class="footer-line teacher">
+          <svg class="svg-icon svg-icon-sm" style="color:var(--neon-cyan)" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Docente: Mg. Mario Quiroz Martinez
+        </div>
+      </div>
+      <div>
+        <div style="font-size:9px;color:rgba(231,231,255,0.15);font-family:'Orbitron',sans-serif;margin-bottom:6px;">MIEMBROS DEL EQUIPO:</div>
+        <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;font-size:9px;color:rgba(231,231,255,0.15);">
+          <span>Responsable de Estilos de Arte</span>
+          <span>Coordinadora de Estilo</span>
+          <span>Diagramacion y Organizacion</span>
+          <span>Verificador de Responsabilidades</span>
+          <span>Evaluadora de Presentaciones</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copy">PROYECTO ILUSTRADOR 2026 | IDC | TODOS LOS DERECHOS RESERVADOS</div>
+  </div>
+</footer>
+
+<!-- ===== DEMO MODAL ===== -->
+<div id="demoModal" style="display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.8);align-items:center;justify-content:center;padding:20px;">
+  <div style="background:rgba(26,15,46,0.95);border:1px solid rgba(0,245,255,0.3);border-radius:12px;padding:24px;max-width:400px;width:100%;box-shadow:0 0 30px rgba(0,245,255,0.1);">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <svg style="width:20px;height:20px;color:var(--neon-cyan)" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <span style="font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;background:linear-gradient(90deg,var(--neon-pink),var(--neon-cyan),var(--neon-purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">GUIA DE USO</span>
+      </div>
+      <button onclick="hideDemo()" style="background:none;border:none;color:rgba(231,231,255,0.4);cursor:pointer;font-size:18px;">&times;</button>
+    </div>
+    <div style="text-align:center;margin-bottom:12px;">
+      <span id="demoStepNum" style="font-size:10px;color:var(--neon-purple);font-family:monospace;">PASO 1 DE 8</span>
+      <div style="height:3px;background:var(--dark-base);border-radius:2px;margin-top:6px;overflow:hidden;">
+        <div id="demoProgress" style="height:100%;background:linear-gradient(90deg,var(--neon-pink),var(--neon-cyan));width:12.5%;transition:width 0.3s;"></div>
+      </div>
+    </div>
+    <div style="background:rgba(11,11,15,0.6);border:1px solid rgba(123,44,255,0.15);border-radius:8px;padding:16px;margin-bottom:16px;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+        <div id="demoIcon" style="width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;background:rgba(0,245,255,0.1);border:1px solid rgba(0,245,255,0.2);">
+          <svg style="width:18px;height:18px;color:var(--neon-cyan)" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+        </div>
+        <span id="demoTitle" style="font-size:12px;font-weight:700;font-family:'Orbitron',sans-serif;">Bienvenido al Formulario</span>
+      </div>
+      <p id="demoDesc" style="font-size:11px;color:rgba(231,231,255,0.5);line-height:1.6;">Este formulario es para reportar el estado de arte de tus proyectos finales de curso. Todos los campos tienen un icono de ayuda (?).</p>
+    </div>
+    <div style="display:flex;justify-content:space-between;">
+      <button onclick="prevDemoStep()" id="demoPrev" class="btn btn-outline" style="font-size:9px;padding:6px 12px;opacity:0.3;" disabled>Anterior</button>
+      <button onclick="nextDemoStep()" id="demoNext" class="btn btn-primary" style="font-size:9px;padding:6px 12px;">Siguiente &rarr;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== JSPDF LIBRARY ===== -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script>
+// ============ DATA ============
+const students = [
+  { rol: 'Responsable de Estilos de Arte', desc: 'Verifica y aplica que los estilos de arte sean los mismos establecidos' },
+  { rol: 'Coordinadora de Estilo', desc: 'Coordina y supervisa la unificacion del estilo de los proyectos' },
+  { rol: 'Diagramacion y Organizacion', desc: 'Diagramacion y supervision de la organizacion de la informacion' },
+  { rol: 'Verificador de Responsabilidades', desc: 'Verifica que todos los miembros cumplan con sus responsabilidades' },
+  { rol: 'Evaluadora de Presentaciones', desc: 'Evalua las presentaciones finales de cada proyecto' },
+];
+
+const helps = {
+  nombres: 'Escribe tus nombres completos como aparecen en tu DNI. Empieza con tu nombre de pila. Ejemplo: Marcelo Gregorio',
+  apellidos: 'Escribe tus apellidos completos como aparecen en tu DNI. Primero el apellido paterno, luego el materno. Ejemplo: Campos Nacido',
+  dni: 'Ingresa los 8 digitos de tu Documento Nacional de Identidad (DNI). Solo numeros, sin espacios ni guiones.',
+  correo: 'Ingresa tu correo institucional del IDC. Formato: nombre.apellido@idcallao.edu.pe',
+  firma: 'Dibuja tu firma digital con el mouse o tu dedo (en tactil). El fondo es transparente. Luego descarga con "Agregar firma PNG".',
+  piezaNombre: 'Escribe un nombre descriptivo para la pieza grafica. Ejemplo: Portada del Cuento Infantil',
+  piezaArchivo: 'Sube la imagen de tu pieza grafica. Formatos: PNG, JPG, JPEG. Tamano maximo: 5MB. La imagen debe estar en alta calidad.',
+  piezaMejoras: 'Describe las mejoras que vas a implementar en esta pieza grafica para cumplir los criterios de evaluacion. Se especifico y detallado.',
+};
+
+const MAX_SIZE = 5 * 1024 * 1024; // 5MB
+let piezaCount = 1;
+let studentCount = 2; // minimo 2 estudiantes
+
+// ============ TOOLTIP SVG ============
+function tip(text) {
+  return `<span class="tooltip-wrap">
+    <svg class="svg-icon svg-icon-sm tooltip-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    <span class="tooltip-box">${text}</span>
+  </span>`;
+}
+
+// ============ RENDER STUDENTS ============
+function renderStudents() {
+  const container = document.getElementById('studentsContainer');
+  container.innerHTML = '';
+  for (let i = 0; i < studentCount; i++) {
+    const s = students[i];
+    const div = document.createElement('div');
+    div.className = 'student-card';
+    div.id = 'student_' + i;
+    div.innerHTML = `
+      <div class="student-header">
+        <div style="display:flex;align-items:center;gap:10px;flex:1;">
+          <div class="student-num">${i+1}</div>
+          <div>
+            <div class="student-role">${s.rol}</div>
+            <div class="student-desc">${s.desc}</div>
+          </div>
+        </div>
+        ${studentCount > 2 ? `<button class="btn btn-danger" onclick="removeStudent(${i})" title="Eliminar estudiante" style="margin-left:8px;"><svg class="svg-icon svg-icon-sm" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>` : ''}
+      </div>
+      <div class="grid-5">
+        <div class="form-group">
+          <label class="form-label">Nombres <span class="required">*</span> ${tip(helps.nombres)}</label>
+          <input type="text" id="nombres_${i}" placeholder="Ej: Marcelo Gregorio">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Apellidos <span class="required">*</span> ${tip(helps.apellidos)}</label>
+          <input type="text" id="apellidos_${i}" placeholder="Ej: Campos Nacido">
+        </div>
+        <div class="form-group">
+          <label class="form-label">DNI <span class="required">*</span> ${tip(helps.dni)}</label>
+          <input type="text" id="dni_${i}" placeholder="12345678" maxlength="8" oninput="this.value=this.value.replace(/\\D/g,'').slice(0,8)">
+        </div>
+        <div class="form-group">
+          <label class="form-label">
+            <svg class="svg-icon svg-icon-sm" style="color:var(--neon-cyan)" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            Correo Institucional <span class="required">*</span> ${tip(helps.correo)}
+          </label>
+          <input type="email" id="correo_${i}" placeholder="ejemplo@idcallao.edu.pe">
+        </div>
+        <div class="form-group">
+          <label class="form-label">
+            <svg class="svg-icon svg-icon-sm" style="color:var(--neon-cyan)" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
+            Firma Digital ${tip(helps.firma)}
+          </label>
+          <div class="sig-wrap">
+            <canvas class="sig-canvas" id="sig_${i}" width="280" height="90"
+              onmousedown="startSig(event,${i})" onmousemove="drawSig(event,${i})" onmouseup="endSig(${i})" onmouseleave="endSig(${i})"
+              ontouchstart="startSigTouch(event,${i})" ontouchmove="drawSigTouch(event,${i})" ontouchend="endSig(${i})"></canvas>
+            <button class="sig-clear" id="sigClear_${i}" onclick="clearSig(${i})">&times;</button>
+          </div>
+          <div class="sig-footer">
+            <span class="sig-hint">Dibuja tu firma (mouse o tactil), fondo transparente</span>
+            <button class="sig-download" id="sigDl_${i}" onclick="downloadSig(${i})">
+              <svg class="svg-icon svg-icon-sm" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Agregar firma PNG
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+    container.appendChild(div);
+  }
+  // Buttons: add/remove students
+  const btnDiv = document.createElement('div');
+  btnDiv.style.cssText = 'display:flex;gap:10px;margin-top:12px;';
+  if (studentCount < 5) {
+    btnDiv.innerHTML += `<button class="btn btn-ghost" onclick="addStudent()" style="margin-top:0;flex:1;"><svg class="svg-icon svg-icon-sm" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> AGREGAR ESTUDIANTE (${studentCount}/5)</button>`;
+  }
+  container.appendChild(btnDiv);
+}
+
+function addStudent() {
+  if (studentCount >= 5) return;
+  studentCount++;
+  renderStudents();
+}
+function removeStudent(idx) {
+  if (studentCount <= 2) {
+    alert('El equipo debe tener minimo 2 estudiantes.');
+    return;
+  }
+  // Remove signature data if exists
+  delete sigData[idx];
+  // Shift data down for indices after the removed one
+  for (let i = idx; i < studentCount - 1; i++) {
+    sigData[i] = sigData[i + 1];
+  }
+  delete sigData[studentCount - 1];
+  studentCount--;
+  renderStudents();
+}
+
+// ============ SIGNATURE ============
+let drawing = {};
+let sigData = {};
+
+function getCtx(i) {
+  const c = document.getElementById('sig_'+i);
+  return c ? c.getContext('2d') : null;
+}
+function getPos(e, i) {
+  const c = document.getElementById('sig_'+i);
+  const r = c.getBoundingClientRect();
+  return { x: e.clientX - r.left, y: e.clientY - r.top };
+}
+function startSig(e, i) {
+  drawing[i] = true;
+  const ctx = getCtx(i);
+  const p = getPos(e, i);
+  ctx.beginPath(); ctx.moveTo(p.x, p.y);
+  ctx.strokeStyle = '#00f5ff'; ctx.lineWidth = 2; ctx.lineCap = 'round';
+}
+function drawSig(e, i) {
+  if (!drawing[i]) return;
+  const ctx = getCtx(i);
+  const p = getPos(e, i);
+  ctx.lineTo(p.x, p.y); ctx.stroke();
+}
+function endSig(i) {
+  if (!drawing[i]) return;
+  drawing[i] = false;
+  const c = document.getElementById('sig_'+i);
+  sigData[i] = c.toDataURL('image/png');
+  document.getElementById('sigClear_'+i).classList.add('show');
+  document.getElementById('sigDl_'+i).classList.add('show');
+}
+function startSigTouch(e, i) {
+  e.preventDefault();
+  const t = e.touches[0];
+  drawing[i] = true;
+  const ctx = getCtx(i);
+  const c = document.getElementById('sig_'+i);
+  const r = c.getBoundingClientRect();
+  ctx.beginPath(); ctx.moveTo(t.clientX - r.left, t.clientY - r.top);
+  ctx.strokeStyle = '#00f5ff'; ctx.lineWidth = 2; ctx.lineCap = 'round';
+}
+function drawSigTouch(e, i) {
+  e.preventDefault();
+  if (!drawing[i]) return;
+  const t = e.touches[0];
+  const ctx = getCtx(i);
+  const c = document.getElementById('sig_'+i);
+  const r = c.getBoundingClientRect();
+  ctx.lineTo(t.clientX - r.left, t.clientY - r.top); ctx.stroke();
+}
+function clearSig(i) {
+  const c = document.getElementById('sig_'+i);
+  const ctx = c.getContext('2d');
+  ctx.clearRect(0, 0, c.width, c.height);
+  delete sigData[i];
+  document.getElementById('sigClear_'+i).classList.remove('show');
+  document.getElementById('sigDl_'+i).classList.remove('show');
+}
+function downloadSig(i) {
+  const c = document.getElementById('sig_'+i);
+  const exportC = document.createElement('canvas');
+  exportC.width = c.width; exportC.height = c.height;
+  const ctx = exportC.getContext('2d');
+  ctx.drawImage(c, 0, 0);
+  ctx.globalCompositeOperation = 'source-atop';
+  ctx.fillStyle = '#00f5ff'; ctx.fillRect(0, 0, exportC.width, exportC.height);
+  const link = document.createElement('a');
+  link.download = `firma_estudiante_${i+1}.png`;
+  link.href = exportC.toDataURL('image/png');
+  link.click();
+}
+
+// ============ PIEZAS ============
+function addPieza() {
+  const container = document.getElementById('piezasContainer');
+  const idx = piezaCount++;
+  const div = document.createElement('div');
+  div.className = 'pieza-card';
+  div.id = 'pieza_' + idx;
+  div.innerHTML = `
+    <div class="pieza-header">
+      <span class="pieza-title">PIEZA #${idx}</span>
+      ${idx > 1 ? `<button class="btn btn-danger" onclick="removePieza(${idx})"><svg class="svg-icon svg-icon-sm" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>` : ''}
+    </div>
+    <div class="grid-3-pieza">
+      <div class="form-group">
+        <label class="form-label">Proyecto</label>
+        <select id="tipo_${idx}">
+          <option value="cuento">Cuento Infantil</option>
+          <option value="infografia">Infografia</option>
+          <option value="juego">Juego de Mesa</option>
+        </select>
+        <label class="form-label" style="margin-top:8px;">Nombre de la pieza ${tip(helps.piezaNombre)}</label>
+        <input type="text" id="pnombre_${idx}" placeholder="Ej: Portada del cuento">
+      </div>
+      <div>
+        <label class="form-label">Imagen de la pieza ${tip(helps.piezaArchivo)}</label>
+        <input type="file" class="upload-input" id="pfile_${idx}" accept="image/png,image/jpeg,image/jpg" onchange="handleFile(${idx})">
+        <div class="upload-zone" id="pzone_${idx}" onclick="document.getElementById('pfile_${idx}').click()">
+          <svg style="width:28px;height:28px;color:var(--neon-purple);margin-bottom:4px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          <span class="upload-hint">Click para subir imagen</span>
+          <span class="upload-limit">PNG, JPG, JPEG | Max: 5.00 MB</span>
+        </div>
+        <div class="upload-error" id="perror_${idx}" style="display:none;"></div>
+        <div class="upload-info" id="pinfo_${idx}" style="display:none;"></div>
+        <button class="upload-remove" id="premove_${idx}" style="display:none;" onclick="removeFile(${idx})">Eliminar imagen</button>
+      </div>
+      <div class="form-group">
+        <label class="form-label">
+          <svg class="svg-icon svg-icon-sm" style="color:var(--neon-cyan)" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          Mejoras a implementar ${tip(helps.piezaMejoras)}
+        </label>
+        <textarea id="pmejoras_${idx}" placeholder="Describe las mejoras que implementaras en esta pieza grafica..."></textarea>
+      </div>
+    </div>
+  `;
+  container.appendChild(div);
+}
+function removePieza(idx) {
+  const el = document.getElementById('pieza_' + idx);
+  if (el) el.remove();
+}
+function formatSize(b) {
+  if (b < 1024) return b + ' B';
+  if (b < 1024*1024) return (b/1024).toFixed(1) + ' KB';
+  return (b/(1024*1024)).toFixed(2) + ' MB';
+}
+let piezaFiles = {};
+function handleFile(idx) {
+  const input = document.getElementById('pfile_' + idx);
+  const err = document.getElementById('perror_' + idx);
+  const info = document.getElementById('pinfo_' + idx);
+  const zone = document.getElementById('pzone_' + idx);
+  const rem = document.getElementById('premove_' + idx);
+  const file = input.files[0];
+  if (!file) return;
+  err.style.display = 'none';
+  if (file.size > MAX_SIZE) {
+    err.innerHTML = `<svg class="svg-icon svg-icon-sm" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> El archivo pesa ${formatSize(file.size)}. El tamano maximo permitido es ${formatSize(MAX_SIZE)}.`;
+    err.style.display = 'flex';
+    input.value = '';
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    piezaFiles[idx] = e.target.result;
+    zone.innerHTML = `<img src="${e.target.result}" style="max-width:100%;max-height:100%;object-fit:contain;">`;
+    zone.classList.add('has-image');
+    info.textContent = `${file.name} (${formatSize(file.size)})`;
+    info.style.display = 'block';
+    rem.style.display = 'inline';
+  };
+  reader.readAsDataURL(file);
+}
+function removeFile(idx) {
+  delete piezaFiles[idx];
+  const input = document.getElementById('pfile_' + idx);
+  const zone = document.getElementById('pzone_' + idx);
+  const info = document.getElementById('pinfo_' + idx);
+  const err = document.getElementById('perror_' + idx);
+  const rem = document.getElementById('premove_' + idx);
+  input.value = '';
+  zone.classList.remove('has-image');
+  zone.innerHTML = `<svg style="width:28px;height:28px;color:var(--neon-purple);margin-bottom:4px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg><span class="upload-hint">Click para subir imagen</span><span class="upload-limit">PNG, JPG, JPEG | Max: 5.00 MB</span>`;
+  info.style.display = 'none';
+  err.style.display = 'none';
+  rem.style.display = 'none';
+}
+
+// ============ DEMO ============
+let demoStep = 0;
+const demoSteps = [
+  { title: 'Bienvenido al Formulario', desc: 'Este formulario es para reportar el estado de arte de tus proyectos finales de curso. Todos los campos tienen un icono de ayuda (?) que explica que informacion ingresar.', color: '#00f5ff' },
+  { title: 'Paso 1: Datos del Equipo', desc: 'Ingresa el nombre del equipo y selecciona la fecha. El icono ? junto a cada campo te explica que informacion ingresar.', color: '#ff2aa3' },
+  { title: 'Paso 2: Datos de Cada Estudiante', desc: 'Cada miembro debe llenar sus NOMBRES, APELLIDOS, DNI, CORREO INSTITUCIONAL y dibujar su FIRMA DIGITAL. Pasa el mouse sobre el icono ? para ver la ayuda.', color: '#7b2cff' },
+  { title: 'Paso 3: Agregar Firmas PNG', desc: 'Dibuja tu firma en el recuadro transparente y luego click en "Agregar firma PNG" para descargarla con fondo transparente.', color: '#ffe600' },
+  { title: 'Paso 4: Subir Piezas Graficas', desc: 'Carga las piezas graficas elegidas para cada proyecto. Tamano maximo: 5MB. Formatos: PNG, JPG, JPEG. Puedes agregar multiples piezas.', color: '#00f5ff' },
+  { title: 'Paso 5: Indicar Mejoras', desc: 'Para cada pieza subida, describe las mejoras que implementaras. Se especifico sobre que cambios haras para cumplir los criterios de evaluacion.', color: '#ff2aa3' },
+  { title: 'Paso 6: Contrato de Derechos', desc: 'Lee el contrato de derechos de autor cuidadosamente. Todos los miembros deben aceptar que los derechos pertenecen al equipo equitativamente.', color: '#7b2cff' },
+  { title: 'Paso 7: Imprimir PDF', desc: 'Revisa que todos los campos esten llenos y haz click en "IMPRIMIR PDF". Se generara un PDF oficial con marca de agua CONFIDENCIAL, firmas y contrato.', color: '#00ff88' },
+];
+function showDemo() { document.getElementById('demoModal').style.display = 'flex'; updateDemo(); }
+function hideDemo() { document.getElementById('demoModal').style.display = 'none'; }
+function updateDemo() {
+  const s = demoSteps[demoStep];
+  document.getElementById('demoStepNum').textContent = `PASO ${demoStep+1} DE ${demoSteps.length}`;
+  document.getElementById('demoProgress').style.width = `${((demoStep+1)/demoSteps.length)*100}%`;
+  document.getElementById('demoTitle').textContent = s.title;
+  document.getElementById('demoDesc').textContent = s.desc;
+  document.getElementById('demoIcon').style.background = s.color + '18';
+  document.getElementById('demoIcon').style.borderColor = s.color + '30';
+  document.getElementById('demoPrev').disabled = demoStep === 0;
+  document.getElementById('demoPrev').style.opacity = demoStep === 0 ? '0.3' : '1';
+  const nextBtn = document.getElementById('demoNext');
+  if (demoStep === demoSteps.length - 1) {
+    nextBtn.textContent = 'Entendido \u2713';
+    nextBtn.onclick = hideDemo;
+  } else {
+    nextBtn.textContent = 'Siguiente \u2192';
+    nextBtn.onclick = nextDemoStep;
+  }
+}
+function nextDemoStep() { if (demoStep < demoSteps.length - 1) { demoStep++; updateDemo(); } }
+function prevDemoStep() { if (demoStep > 0) { demoStep--; updateDemo(); } }
+
+// ============ PDF GENERATOR ============
+async function generatePDF() {
+  const { jsPDF } = window.jspdf;
+
+  // Validation
+  if (studentCount < 2) {
+    alert('El equipo debe tener minimo 2 estudiantes.');
+    return;
+  }
+  for (let i = 0; i < studentCount; i++) {
+    if (!document.getElementById('nombres_'+i).value || !document.getElementById('apellidos_'+i).value ||
+        !document.getElementById('dni_'+i).value || !document.getElementById('correo_'+i).value) {
+      alert('Por favor completa NOMBRES, APELLIDOS, DNI y CORREO INSTITUCIONAL de todos los estudiantes (' + studentCount + ' registrados).');
+      return;
+    }
+  }
+  if (!document.getElementById('contratoCheck').checked) {
+    alert('Debes aceptar el contrato de derechos de autor.');
+    return;
+  }
+
+  const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+  const pageW = doc.internal.pageSize.getWidth();
+  const pageH = doc.internal.pageSize.getHeight();
+
+  // Metadata
+  doc.setProperties({
+    title: 'Formulario Estado de Arte - Proyecto Ilustrador 2026',
+    subject: 'Contrato de Derechos de Autor - Equipo Valor de la Amistad',
+    author: 'Mg. Mario Quiroz Martinez',
+    creator: 'IDC - Instituto de Educacion Superior Publico',
+    keywords: 'contrato, derechos de autor, proyecto ilustrador, IDC',
+  });
+
+  let y = 15;
+
+  // Header
+  doc.setFillColor(11, 11, 15);
+  doc.rect(0, 0, pageW, 30, 'F');
+  doc.setDrawColor(0, 245, 255);
+  doc.setLineWidth(0.5);
+  doc.line(10, 28, pageW - 10, 28);
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(15);
+  doc.setFont('helvetica', 'bold');
+  doc.text('IDC - Instituto de Educacion Superior Publico', pageW / 2, 11, { align: 'center' });
+  doc.setFontSize(9);
+  doc.setTextColor(0, 245, 255);
+  doc.text('Diseno & Comunicacion', pageW / 2, 17, { align: 'center' });
+  doc.setTextColor(255, 42, 163);
+  doc.setFontSize(7);
+  doc.text('DOCUMENTO OFICIAL - CONFIDENCIAL', pageW / 2, 23, { align: 'center' });
+
+  y = 36;
+
+  // Title
+  doc.setTextColor(0, 245, 255);
+  doc.setFontSize(13);
+  doc.setFont('helvetica', 'bold');
+  doc.text('FORMULARIO DE ESTADO DE ARTE', pageW / 2, y, { align: 'center' });
+  y += 5;
+  doc.setFontSize(8);
+  doc.setTextColor(200, 200, 255);
+  doc.text('Curso: Proyecto Ilustrador 2026 | Semana 12', pageW / 2, y, { align: 'center' });
+  y += 4;
+  doc.setTextColor(255, 42, 163);
+  doc.text('Equipo: ' + document.getElementById('nombreEquipo').value, pageW / 2, y, { align: 'center' });
+  y += 8;
+
+  // Students
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(10);
+  doc.setFont('helvetica', 'bold');
+  doc.text('1. MIEMBROS DEL EQUIPO (' + studentCount + ' estudiantes)', 10, y);
+  y += 4;
+  doc.setDrawColor(123, 44, 255);
+  doc.setLineWidth(0.3);
+  doc.line(10, y, pageW - 10, y);
+  y += 3;
+
+  for (let i = 0; i < studentCount; i++) {
+    if (y > 270) { doc.addPage(); y = 15; }
+    const nom = document.getElementById('nombres_'+i).value + ' ' + document.getElementById('apellidos_'+i).value;
+    doc.setFontSize(8);
+    doc.setTextColor(0, 245, 255);
+    doc.setFont('helvetica', 'bold');
+    doc.text((i+1) + '. ' + nom, 12, y);
+    y += 3;
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(200, 200, 255);
+    doc.setFontSize(7);
+    doc.text('   DNI: ' + document.getElementById('dni_'+i).value, 12, y);
+    y += 2.5;
+    doc.text('   Correo: ' + document.getElementById('correo_'+i).value, 12, y);
+    y += 2.5;
+    doc.text('   Rol: ' + students[i].rol, 12, y);
+    y += 2.5;
+    doc.text('   Responsabilidad: ' + students[i].desc, 12, y);
+    y += 3;
+    if (sigData[i]) {
+      try { doc.addImage(sigData[i], 'PNG', 12, y, 38, 11, '', 'FAST'); } catch(e) {}
+      y += 13;
+    }
+    y += 1;
+  }
+
+  y += 3;
+
+  // Piezas
+  const piezaEls = document.querySelectorAll('.pieza-card');
+  if (piezaEls.length > 0) {
+    if (y > 230) { doc.addPage(); y = 15; }
+    doc.setFontSize(10);
+    doc.setTextColor(255, 255, 255);
+    doc.setFont('helvetica', 'bold');
+    doc.text('2. PIEZAS GRAFICAS ELEGIDAS', 10, y);
+    y += 4;
+    doc.setDrawColor(123, 44, 255);
+    doc.line(10, y, pageW - 10, y);
+    y += 3;
+
+    piezaEls.forEach((el, idx) => {
+      const id = el.id.split('_')[1];
+      const tipo = document.getElementById('tipo_'+id).value;
+      const nombre = document.getElementById('pnombre_'+id).value;
+      const mejoras = document.getElementById('pmejoras_'+id).value;
+
+      if (y > 250) { doc.addPage(); y = 15; }
+      doc.setFontSize(8);
+      doc.setTextColor(255, 234, 0);
+      doc.setFont('helvetica', 'bold');
+      doc.text('Pieza #' + (idx+1) + ' - ' + tipo.toUpperCase(), 12, y);
+      y += 3;
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(200, 200, 255);
+      doc.setFontSize(7);
+      doc.text('Nombre: ' + (nombre || '(sin nombre)'), 12, y);
+      y += 2.5;
+      if (piezaFiles[id]) {
+        try {
+          doc.addImage(piezaFiles[id], 'JPEG', 12, y, 75, 45, '', 'FAST');
+          y += 47;
+        } catch(e) { doc.text('(Imagen no disponible)', 12, y); y += 3; }
+      }
+      doc.setTextColor(0, 245, 255);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(7);
+      doc.text('Mejoras a implementar:', 12, y);
+      y += 2.5;
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(200, 200, 255);
+      const ml = doc.splitTextToSize(mejoras || '(Sin mejoras indicadas)', pageW - 24);
+      doc.text(ml, 12, y);
+      y += ml.length * 2.8 + 3;
+    });
+  }
+
+  // Contract
+  if (y > 200) { doc.addPage(); y = 15; }
+  doc.setFontSize(10);
+  doc.setTextColor(255, 42, 163);
+  doc.setFont('helvetica', 'bold');
+  doc.text('3. CONTRATO DE DERECHOS DE AUTOR', 10, y);
+  y += 4;
+  doc.setDrawColor(255, 42, 163);
+  doc.line(10, y, pageW - 10, y);
+  y += 4;
+
+  const clausulas = [
+    ['CLAUSULA 1 - PROPIEDAD INTELECTUAL COMPARTIDA:', 'Los derechos de autor de todos los proyectos desarrollados en el curso de Proyecto Ilustrador 2026 pertenecen de manera equitativa y conjunta a todos los miembros del equipo.'],
+    ['CLAUSULA 2 - REGISTRO EN PIEZAS GRAFICAS:', 'Todas las piezas graficas presentadas deben incluir el credito completo de todos los miembros del equipo.'],
+    ['CLAUSULA 3 - RENUNCIA AL EQUIPO:', 'Si un miembro renuncia, debe presentar una carta poder cediendo sus derechos creativos, intelectuales y funcionales.'],
+    ['CLAUSULA 4 - DISTRIBUCION EQUITATIVA:', 'Los beneficios y reconocimientos seran distribuidos de manera equitativa entre todos los miembros activos.']
+  ];
+
+  clausulas.forEach(([t, b]) => {
+    if (y > 260) { doc.addPage(); y = 15; }
+    doc.setFontSize(7);
+    doc.setTextColor(0, 245, 255);
+    doc.setFont('helvetica', 'bold');
+    doc.text(t, 12, y);
+    y += 2.5;
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(200, 200, 255);
+    const lines = doc.splitTextToSize(b, pageW - 24);
+    doc.text(lines, 12, y);
+    y += lines.length * 2.5 + 3;
+  });
+
+  y += 2;
+  doc.setTextColor(0, 255, 136);
+  doc.setFont('helvetica', 'bold');
+  doc.text('✓ CONTRATO ACEPTADO POR TODOS LOS MIEMBROS DEL EQUIPO', 12, y);
+  y += 7;
+
+  // Criteria
+  if (y > 230) { doc.addPage(); y = 15; }
+  doc.setFontSize(10);
+  doc.setTextColor(255, 255, 255);
+  doc.setFont('helvetica', 'bold');
+  doc.text('4. CRITERIOS DE EVALUACION', 10, y);
+  y += 4;
+  doc.setDrawColor(0, 255, 136);
+  doc.line(10, y, pageW - 10, y);
+  y += 4;
+
+  const crits = [
+    ['(A) Organizacion', 'SI', 'NO', 'SI'],
+    ['(B) Sketchbook digital', 'SI', 'NO', 'SI'],
+    ['(C) Caracterizacion', 'SI', 'SI', 'NO'],
+    ['(D) Creatividad', 'SI', 'NO', 'SI'],
+    ['(E) Legibilidad', 'SI', 'SI', 'SI'],
+  ];
+  doc.setFontSize(7);
+  doc.setTextColor(123, 44, 255);
+  doc.setFont('helvetica', 'bold');
+  doc.text('Criterio', 12, y);
+  doc.text('Cuento', pageW - 52, y, { align: 'center' });
+  doc.text('Infografia', pageW - 34, y, { align: 'center' });
+  doc.text('Juego', pageW - 16, y, { align: 'center' });
+  y += 3;
+
+  crits.forEach(([c, cv, iv, jv]) => {
+    doc.setTextColor(200, 200, 255);
+    doc.setFont('helvetica', 'normal');
+    doc.text(c, 12, y);
+    doc.setTextColor(cv === 'SI' ? 0 : 255, cv === 'SI' ? 255 : 100, cv === 'SI' ? 136 : 100);
+    doc.text(cv, pageW - 52, y, { align: 'center' });
+    doc.setTextColor(iv === 'SI' ? 0 : 255, iv === 'SI' ? 255 : 100, iv === 'SI' ? 136 : 100);
+    doc.text(iv, pageW - 34, y, { align: 'center' });
+    doc.setTextColor(jv === 'SI' ? 0 : 255, jv === 'SI' ? 255 : 100, jv === 'SI' ? 136 : 100);
+    doc.text(jv, pageW - 16, y, { align: 'center' });
+    y += 4;
+  });
+
+  // Signatures
+  y += 6;
+  if (y > 230) { doc.addPage(); y = 15; }
+  doc.setFontSize(10);
+  doc.setTextColor(255, 255, 255);
+  doc.setFont('helvetica', 'bold');
+  doc.text('5. FIRMAS DIGITALES (' + studentCount + ')', 10, y);
+  y += 4;
+  doc.setDrawColor(200, 200, 200);
+  doc.line(10, y, pageW - 10, y);
+  y += 5;
+
+  const cols = [15, 75, 135];
+  let col = 0;
+  for (let i = 0; i < studentCount; i++) {
+    if (col === 0 && i > 0) y += 24;
+    const x = cols[col];
+    if (sigData[i]) { try { doc.addImage(sigData[i], 'PNG', x, y, 38, 11, '', 'FAST'); } catch(e) {} }
+    doc.setDrawColor(180, 180, 180);
+    doc.line(x, y + 12, x + 44, y + 12);
+    doc.setFontSize(6.5);
+    doc.setTextColor(200, 200, 255);
+    doc.setFont('helvetica', 'bold');
+    const nom = document.getElementById('nombres_'+i).value + ' ' + document.getElementById('apellidos_'+i).value;
+    doc.text(nom, x, y + 15);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(140, 140, 140);
+    doc.text('DNI: ' + document.getElementById('dni_'+i).value, x, y + 18);
+    col = (col + 1) % 3;
+  }
+
+  // Footer
+  y += 28;
+  if (y > 260) { doc.addPage(); y = 20; }
+  doc.setDrawColor(0, 245, 255);
+  doc.setLineWidth(0.4);
+  doc.line(10, y, pageW - 10, y);
+  y += 5;
+  doc.setFontSize(8);
+  doc.setTextColor(0, 245, 255);
+  doc.setFont('helvetica', 'bold');
+  doc.text('Docente del Curso:', 10, y);
+  doc.setTextColor(255, 255, 255);
+  doc.text('Mg. Mario Quiroz Martinez', 48, y);
+  y += 4;
+  doc.setFontSize(6.5);
+  doc.setTextColor(100, 100, 100);
+  doc.text('Instituto de Educacion Superior Publico - Diseno & Comunicacion', 10, y);
+  y += 2.5;
+  doc.text('Curso: Proyecto Ilustrador 2026 | Semana 12', 10, y);
+  y += 2.5;
+  doc.text('Documento generado el: ' + new Date().toLocaleDateString('es-PE'), 10, y);
+
+  // Watermark + page numbers
+  const total = doc.getNumberOfPages();
+  for (let p = 1; p <= total; p++) {
+    doc.setPage(p);
+    doc.setTextColor(35, 35, 45);
+    doc.setFontSize(48);
+    doc.setFont('helvetica', 'bold');
+    doc.text('CONFIDENCIAL', pageW / 2, pageH / 2, { align: 'center', angle: 45 });
+    doc.setFontSize(7);
+    doc.setTextColor(70, 70, 90);
+    doc.text('Pagina ' + p + ' de ' + total + ' | IDC 2026 | Documento Oficial', pageW / 2, pageH - 4, { align: 'center' });
+  }
+
+  const eq = document.getElementById('nombreEquipo').value.replace(/\s+/g, '-');
+  doc.save('formulario-estado-arte-' + eq + '-2026.pdf');
+
+  const sm = document.getElementById('successMsg');
+  sm.style.display = 'block';
+  setTimeout(() => sm.style.display = 'none', 5000);
+}
+
+// ============ INIT ============
+renderStudents();
+addPieza();
+</script>
+
+</body>
 </html>
